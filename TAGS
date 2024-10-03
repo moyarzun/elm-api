@@ -1,0 +1,137 @@
+
+app/mailers/application_mailer.rb,67
+class ApplicationMailer < ActionMailer::BaseApplicationMailer1,0
+
+app/models/table.rb,264
+class Table < ApplicationRecordTable1,0
+  belongs_to :league_dayleague_day2,0
+  belongs_to :league_dayleague_day=2,0
+  belongs_to :league_daybuild_league_day2,0
+  belongs_to :league_daycreate_league_day2,0
+  belongs_to :league_daycreate_league_day!2,0
+
+app/models/api_key.rb,799
+class ApiKey < ApplicationRecordApiKey1,0
+  HMAC_SECRET_KEY = ENV.fetch('API_KEY_HMAC_SECRET_KEY')HMAC_SECRET_KEY2,0
+  HMAC_SECRET_KEY = ENV.fetch('API_KEY_HMAC_SECRET_KEY')ApiKey::HMAC_SECRET_KEY2,0
+  attr_accessor :tokentoken6,0
+  attr_accessor :tokentoken=6,0
+  belongs_to :bearer, polymorphic: truebearer8,0
+  belongs_to :bearer, polymorphic: truebearer=8,0
+  belongs_to :bearer, polymorphic: truebuild_bearer8,0
+  belongs_to :bearer, polymorphic: truecreate_bearer8,0
+  belongs_to :bearer, polymorphic: truecreate_bearer!8,0
+  def self.authenticate_by_token!(token)authenticate_by_token!12,0
+  def self.authenticate_by_token(token)authenticate_by_token18,0
+  def serializable_hash(options = nil)serializable_hash26,0
+  def generate_token_hmacgenerate_token_hmac34,0
+
+app/models/league.rb,212
+class League < ApplicationRecordLeague1,0
+  has_many :league_daysleague_days2,0
+  has_many :league_daysleague_days=2,0
+  has_many :league_daysleague_day_ids2,0
+  has_many :league_daysleague_day_ids=2,0
+
+app/models/application_record.rb,67
+class ApplicationRecord < ActiveRecord::BaseApplicationRecord1,0
+
+app/models/league_day.rb,360
+class LeagueDay < ApplicationRecordLeagueDay1,0
+  belongs_to :leagueleague2,0
+  belongs_to :leagueleague=2,0
+  belongs_to :leaguebuild_league2,0
+  belongs_to :leaguecreate_league2,0
+  belongs_to :leaguecreate_league!2,0
+  has_many :tablestables3,0
+  has_many :tablestables=3,0
+  has_many :tablestable_ids3,0
+  has_many :tablestable_ids=3,0
+
+app/models/concerns/api_key_authenticatable.rb,442
+module ApiKeyAuthenticatableApiKeyAuthenticatable1,0
+  attr_reader :current_api_keycurrent_api_key7,0
+  attr_reader :current_bearercurrent_bearer8,0
+  def authenticate_with_api_key!authenticate_with_api_key!12,0
+  def authenticate_with_api_keyauthenticate_with_api_key17,0
+  attr_writer :current_api_keycurrent_api_key=23,0
+  attr_writer :current_bearercurrent_bearer=24,0
+  def authenticator(token, options)authenticator26,0
+
+app/models/user.rb,236
+class User < ApplicationRecordUser1,0
+  has_many :api_keys, as: :bearerapi_keys2,0
+  has_many :api_keys, as: :bearerapi_keys=2,0
+  has_many :api_keys, as: :bearerapi_key_ids2,0
+  has_many :api_keys, as: :bearerapi_key_ids=2,0
+
+app/jobs/application_job.rb,58
+class ApplicationJob < ActiveJob::BaseApplicationJob1,0
+
+app/controllers/application_controller.rb,78
+class ApplicationController < ActionController::APIApplicationController1,0
+
+app/controllers/leagues_controller.rb,92
+class LeaguesController < ActionController::APILeaguesController1,0
+  def indexindex2,0
+
+app/controllers/tables_controller.rb,90
+class TablesController < ActionController::APITablesController1,0
+  def indexindex2,0
+
+app/controllers/league_days_controller.rb,98
+class LeagueDaysController < ActionController::APILeagueDaysController1,0
+  def indexindex2,0
+
+app/controllers/home_controller.rb,86
+class HomeController < ApplicationControllerHomeController1,0
+  def indexindex2,0
+
+app/controllers/api_keys_controller.rb,144
+class ApiKeysController < ApplicationControllerApiKeysController1,0
+  def indexindex7,0
+  def createcreate11,0
+  def destroydestroy25,0
+
+app/channels/application_cable/connection.rb,195
+module ApplicationCableApplicationCable1,0
+  class Connection < ActionCable::Connection::BaseConnection2,0
+  class Connection < ActionCable::Connection::BaseApplicationCable::Connection2,0
+
+app/channels/application_cable/channel.rb,177
+module ApplicationCableApplicationCable1,0
+  class Channel < ActionCable::Channel::BaseChannel2,0
+  class Channel < ActionCable::Channel::BaseApplicationCable::Channel2,0
+
+test/test_helper.rb,101
+class ActiveSupport::TestCaseTestCase5,0
+class ActiveSupport::TestCaseActiveSupport::TestCase5,0
+
+test/channels/application_cable/connection_test.rb,206
+class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCaseConnectionTest3,0
+class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCaseApplicationCable::ConnectionTest3,0
+
+config/application.rb,140
+module AppApp9,0
+  class Application < Rails::ApplicationApplication10,0
+  class Application < Rails::ApplicationApp::Application10,0
+
+db/migrate/20230103205336_create_api_keys.rb,93
+class CreateApiKeys < ActiveRecord::Migration[7.0]CreateApiKeys1,0
+  def changechange2,0
+
+db/migrate/20230103170012_create_tables.rb,91
+class CreateTables < ActiveRecord::Migration[7.0]CreateTables1,0
+  def changechange2,0
+
+db/migrate/20230103165922_create_league_days.rb,99
+class CreateLeagueDays < ActiveRecord::Migration[7.0]CreateLeagueDays1,0
+  def changechange2,0
+
+db/migrate/20230103165701_create_leagues.rb,93
+class CreateLeagues < ActiveRecord::Migration[7.0]CreateLeagues1,0
+  def changechange2,0
+
+db/migrate/20230103204706_create_users.rb,89
+class CreateUsers < ActiveRecord::Migration[7.0]CreateUsers1,0
+  def changechange2,0

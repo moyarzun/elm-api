@@ -1,16 +1,20 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  username: postgres
-  password: password
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
 
 development:
   <<: *default
-  database: myapp_development
+  database: elm-api_development
 
 
 test:
   <<: *default
-  database: myapp_test
+  database: elm-api_test
+
+production:
+  <<: *default
+  database: elm-api_production
