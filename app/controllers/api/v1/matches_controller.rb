@@ -1,51 +1,60 @@
 class Api::V1::MatchesController < ApplicationController
-  before_action :set_api_v1_match, only: %i[ show update destroy ]
+  before_action :set_match, only: %i[show update destroy]
 
   # GET /api/v1/matches
   def index
-    @api_v1_matches = Api::V1::Match.all
+    @matches = Match.all
 
-    render json: @api_v1_matches
+    render json: @matches
   end
 
   # GET /api/v1/matches/1
   def show
-    render json: @api_v1_match
+    render json: @match.as_json(
+      except: %i[created_at updated_at],
+      include: {
+        players: {
+          except: %i[created_at updated_at],
+          methods: :score
+        }
+      }
+    )
   end
 
   # POST /api/v1/matches
   def create
-    @api_v1_match = Api::V1::Match.new(api_v1_match_params)
+    @match = Match.new(match_params)
 
-    if @api_v1_match.save
-      render json: @api_v1_match, status: :created, location: @api_v1_match
+    if @match.save
+      render json: @match, status: :created, location: @match
     else
-      render json: @api_v1_match.errors, status: :unprocessable_entity
+      render json: @match.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /api/v1/matches/1
   def update
-    if @api_v1_match.update(api_v1_match_params)
-      render json: @api_v1_match
+    if @match.update(match_params)
+      render json: @match
     else
-      render json: @api_v1_match.errors, status: :unprocessable_entity
+      render json: @match.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/matches/1
   def destroy
-    @api_v1_match.destroy
+    @match.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_api_v1_match
-      @api_v1_match = Api::V1::Match.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def api_v1_match_params
-      params.fetch(:api_v1_match, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_match
+    @match = Match.includes(:players).find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def match_params
+    params.fetch(:match, {})
+  end
 end

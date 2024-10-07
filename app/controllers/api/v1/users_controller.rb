@@ -1,51 +1,52 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_api_v1_user, only: %i[ show update destroy ]
+  before_action :set_user, only: %i[show update destroy]
 
   # GET /api/v1/users
   def index
-    @api_v1_users = Api::V1::User.all
+    @users = User.all
 
-    render json: @api_v1_users
+    render json: @users
   end
 
   # GET /api/v1/users/1
   def show
-    render json: @api_v1_user
+    render json: @user
   end
 
   # POST /api/v1/users
   def create
-    @api_v1_user = Api::V1::User.new(api_v1_user_params)
+    @user = User.new(user_params)
 
-    if @api_v1_user.save
-      render json: @api_v1_user, status: :created, location: @api_v1_user
+    if @user.save
+      render json: @user, status: :created, location: @user
     else
-      render json: @api_v1_user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /api/v1/users/1
   def update
-    if @api_v1_user.update(api_v1_user_params)
-      render json: @api_v1_user
+    if @user.update(user_params)
+      render json: @user
     else
-      render json: @api_v1_user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/users/1
   def destroy
-    @api_v1_user.destroy
+    @user.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_api_v1_user
-      @api_v1_user = Api::V1::User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def api_v1_user_params
-      params.fetch(:api_v1_user, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.fetch(:user, {})
+  end
 end

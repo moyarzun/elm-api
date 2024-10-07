@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  scope :api do
-    scope :v1 do
+  namespace :api do
+    namespace :v1 do
       resources :matches
       resources :players
+      resources :player_matches
       resources :users
     end
   end
