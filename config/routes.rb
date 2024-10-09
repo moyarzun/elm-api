@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :matches
+      resources :matches do
+        member do
+          put 'score_update'
+        end
+      end
       resources :players
       resources :player_matches
       resources :users

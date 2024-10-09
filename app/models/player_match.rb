@@ -2,7 +2,7 @@ class PlayerMatch < ApplicationRecord
   belongs_to :player
   belongs_to :match
 
-  validate :match_players_count_within_limit
+  validate :match_players_count_within_limit, on: :create
 
   private
 
