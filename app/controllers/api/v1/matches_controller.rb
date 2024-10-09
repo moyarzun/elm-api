@@ -5,7 +5,15 @@ class Api::V1::MatchesController < ApplicationController
   def index
     @matches = Match.all
 
-    render json: @matches
+    render json: @matches.as_json(
+      except: %i[created_at updated_at],
+      include: {
+        players: {
+          except: %i[created_at updated_at],
+          methods: :score
+        }
+      }
+    )
   end
 
   # GET /api/v1/matches/1
