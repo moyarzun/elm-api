@@ -13,6 +13,12 @@ class Api::V1::MatchesController < ApplicationController
     render json: match_response(@match)
   end
 
+  # GET /api/v1/matches/by_round/:round_id
+  def by_round
+    @matches = Match.where(round_id: params[:round_id])
+    render json: @matches.map { |match| match_response(match) }
+  end
+
   # POST /api/v1/matches
   def create
     @match = Match.new(match_params)

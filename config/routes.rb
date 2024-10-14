@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :rounds do
+        resources :matches, only: [:index]
+      end
       resources :matches do
+        collection do
+          get 'by_round/:round_id', to: 'matches#by_round', as: 'by_round'
+        end
         member do
           put 'score_update'
         end

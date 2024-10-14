@@ -1,5 +1,6 @@
 class Match < ApplicationRecord
-  has_many :player_matches
+  belongs_to :round
+  has_many :player_matches, dependent: :destroy
   has_many :players, through: :player_matches
 
   # Establecer el valor predeterminado para max_players
