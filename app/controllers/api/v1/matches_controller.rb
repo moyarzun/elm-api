@@ -24,7 +24,7 @@ class Api::V1::MatchesController < ApplicationController
     @match = Match.new(match_params)
 
     if @match.save
-      render json: @match, status: :created, location: @match
+      render json: @match, status: :created
     else
       render json: @match.errors, status: :unprocessable_entity
     end
@@ -80,18 +80,18 @@ class Api::V1::MatchesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def match_params
-    params.require(:match).permit(:max_players, :locked)
+    params.permit(:tournament_id, :round_id, :locked)
   end
 
   def score_params
-    params.require(:match).permit(:id, :max_players, :locked, players: %i[id name score])
+    params.require(:match).permit(:id, :tournament_id, :round_id, :locked, players: %i[id name score])
   end
 
   # Construir la respuesta JSON para un match
   def match_response(match)
     {
       id: match.id,
-      max_players: match.max_players,
+      max_players: match.tournament.players_per_match || nil,
       locked: match.locked || false,
       players: match.players.map do |player|
         {

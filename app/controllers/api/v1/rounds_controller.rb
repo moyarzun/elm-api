@@ -14,6 +14,12 @@ module Api
         render json: @round, include: :matches
       end
 
+      # GET /api/v1/matches/by_round/:round_id
+      def by_tournament
+        @rounds = Round.where(tournament_id: params[:tournament_id])
+        render json: @rounds.map { |round| round_response(round) }
+      end
+
       # POST /api/v1/rounds
       def create
         @round = Round.new(round_params)
@@ -45,7 +51,21 @@ module Api
       end
 
       def round_params
-        params.require(:round).permit(:name, matches_attributes: %i[id name _destroy])
+        params.permit(:tournament_id)
+      end
+
+      # Construir la respuesta JSON para un match
+      def round_response(round)
+        {
+          id: round.id,
+          matches: round.matches.map do |match|
+            {
+              id: match.id,
+              players_amount: match.players.length,
+              locked: match.locked
+            }
+          end
+        }
       end
     end
   end

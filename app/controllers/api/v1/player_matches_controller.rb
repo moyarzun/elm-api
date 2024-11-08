@@ -1,30 +1,30 @@
 class Api::V1::PlayerMatchesController < ApplicationController
   before_action :set_player_match, only: %i[show update destroy]
 
-  # GET /api/v1/players
+  # GET /api/v1/player_matches
   def index
     @player_matches = PlayerMatch.all
 
     render json: @player_matches
   end
 
-  # GET /api/v1/players/1
+  # GET /api/v1/player_matches/1
   def show
     render json: @player_match
   end
 
-  # POST /api/v1/players
+  # POST /api/v1/player_matches
   def create
-    @player_match = APlayer.new(params)
+    @player_match = PlayerMatch.new(player_match_params)
 
     if @player_match.save
-      render json: @player_match, status: :created, location: @player_match
+      render json: @player_match, status: :created
     else
       render json: @player_match.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /api/v1/players/1
+  # PATCH/PUT /api/v1/player_matches/1
   def update
     if @player_match.update(player_params)
       render json: @player_match
@@ -33,7 +33,7 @@ class Api::V1::PlayerMatchesController < ApplicationController
     end
   end
 
-  # DELETE /api/v1/players/1
+  # DELETE /api/v1/player_matches/1
   def destroy
     @player_match.destroy
   end
@@ -47,6 +47,6 @@ class Api::V1::PlayerMatchesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def player_match_params
-    params.fetch(:player_match, {})
+    params.permit(:player_id, :match_id, :round_id, :tournament_id, :score)
   end
 end

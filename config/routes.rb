@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :tournaments
       resources :rounds do
         resources :matches, only: [:index]
+        collection do
+          get 'by_tournament/:tournament_id', to: 'rounds#by_tournament', as: 'by_tournament'
+        end
       end
       resources :matches do
         collection do

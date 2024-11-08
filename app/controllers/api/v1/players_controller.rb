@@ -1,5 +1,5 @@
 class Api::V1::PlayersController < ApplicationController
-  before_action :set_api_v1_player, only: %i[show update destroy]
+  before_action :set_player, only: %i[show update destroy]
 
   # GET /api/v1/players
   def index
@@ -15,10 +15,10 @@ class Api::V1::PlayersController < ApplicationController
 
   # POST /api/v1/players
   def create
-    @player = APlayer.new(params)
+    @player = Player.new(player_params)
 
     if @player.save
-      render json: @player, status: :created, location: @player
+      render json: @player, status: :created
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class Api::V1::PlayersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def player_params
-    params.fetch(:player, {})
+    params.permit(:name)
   end
 end
