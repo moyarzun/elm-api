@@ -3,6 +3,7 @@ class PlayerMatch < ApplicationRecord
   belongs_to :match
   belongs_to :round
   belongs_to :tournament
+  has_many :comments, as: :source
 
   validate :match_players_count_within_limit, on: :create
 

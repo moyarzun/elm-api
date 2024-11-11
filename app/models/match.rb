@@ -3,6 +3,7 @@ class Match < ApplicationRecord
   belongs_to :tournament
   has_many :player_matches, dependent: :destroy
   has_many :players, through: :player_matches
+  has_many :comments, as: :source
 
   # Establecer el valor predeterminado para max_players
   before_save :set_default_locked
