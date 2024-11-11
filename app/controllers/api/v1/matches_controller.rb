@@ -1,5 +1,5 @@
 class Api::V1::MatchesController < ApplicationController
-  before_action :set_match, only: %i[show update destroy score_update]
+  before_action :set_match, only: %i[show update destroy score_update lock unlock]
 
   # GET /api/v1/matches
   def index
@@ -63,12 +63,27 @@ class Api::V1::MatchesController < ApplicationController
     render json: match_response(@match)
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
-    pp e
   end
 
   # DELETE /api/v1/matches/1
   def destroy
     @match.destroy
+  end
+
+  # PUT /api/v1/matches/1/lock
+  def lock
+    @match.lock.save!
+    render json: match_response(@match)
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
+  # PUT /api/v1/matches/1/unlock
+  def unlock
+    @match.unlock.save!
+    render json: match_response(@match)
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
   end
 
   private

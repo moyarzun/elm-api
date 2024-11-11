@@ -1,7 +1,7 @@
 module Api
   module V1
     class RoundsController < ApplicationController
-      before_action :set_round, only: %i[show update destroy]
+      before_action :set_round, only: %i[show update destroy calculate_standings]
 
       # GET /api/v1/rounds
       def index
@@ -42,6 +42,17 @@ module Api
       # DELETE /api/v1/rounds/:id
       def destroy
         @round.destroy
+      end
+
+      def calculate_standings
+        @matches = Match.where(round_id: @round.id)
+        raise RoundError::OpenMatchesError if @matches.map(&:locked).include?(false)
+
+        # TODO: - Calcular standings de torneo
+        #      - Crear nuevo Round
+        #      - Generar emparejamientos/pods nuevos
+      rescue RoundError::OpenMatchesError
+        render json: { errors: ['All matches must be locked'] }, status: :unprocessable_entity
       end
 
       private

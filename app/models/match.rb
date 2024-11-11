@@ -14,6 +14,18 @@ class Match < ApplicationRecord
     super(options).merge('locked' => locked.nil? ? false : locked)
   end
 
+  # Bloquear match
+  def lock
+    self.locked = true
+    self
+  end
+
+  # Desbloquear match
+  def unlock
+    self.locked = false
+    self
+  end
+
   private
 
   def set_default_locked

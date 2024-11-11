@@ -7,6 +7,9 @@ Rails.application.routes.draw do
         collection do
           get 'by_tournament/:tournament_id', to: 'rounds#by_tournament', as: 'by_tournament'
         end
+        member do
+          get 'calculate_standings'
+        end
       end
       resources :matches do
         collection do
@@ -14,6 +17,8 @@ Rails.application.routes.draw do
         end
         member do
           put 'score_update'
+          put 'lock'
+          put 'unlock'
         end
       end
       resources :players
